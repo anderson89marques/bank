@@ -1,0 +1,82 @@
+definitions:
+  rest.AccountInputSchema:
+    properties:
+      document:
+        type: string
+    type: object
+  rest.AccountList:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/rest.AccountOutputSchema'
+        type: array
+    type: object
+  rest.AccountOutputSchema:
+    properties:
+      document:
+        type: string
+      id:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/accounts:
+    get:
+      consumes:
+      - application/json
+      description: List Accounts
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.AccountList'
+      summary: Banking
+      tags:
+      - Accounts
+    post:
+      consumes:
+      - application/json
+      description: create bank account
+      parameters:
+      - description: Create Account
+        in: body
+        name: AccountInputSchema
+        required: true
+        schema:
+          $ref: '#/definitions/rest.AccountInputSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.AccountOutputSchema'
+      summary: Banking
+      tags:
+      - Accounts
+  /api/v1/accounts/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get account by id
+      parameters:
+      - description: Find Account by Id
+        format: int64
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.AccountOutputSchema'
+      summary: Banking
+      tags:
+      - Accounts
+swagger: "2.0"
