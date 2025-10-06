@@ -18,10 +18,11 @@ run-dev:
 test:
 	$(GO) test ./...
 
-.PHONY: run-api
+.PHONY: run-db run-api
 # Run project
 run:
-	docker-composer up --build --force-recreate -d
+	docker-compose up --build db -d && \
+	docker-compose up --build --force-recreate api -d
 
 # Run api
 run-api:
